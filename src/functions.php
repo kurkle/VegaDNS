@@ -794,6 +794,8 @@ function display_msg() {
     }
 }
 
+$smarty->registerPlugin(Smarty\Smarty::PLUGIN_FUNCTION, 'display_msg', 'display_msg');
+
 // END FUNCTIONS
 
 ?>

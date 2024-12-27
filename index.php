@@ -27,10 +27,10 @@ ini_set('session.use_only_cookies', 0);
 ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 
 // Smarty
-define('SMARTY_DIR', 'smarty/');
-require(SMARTY_DIR.'/Smarty.class.php');
-$smarty = new Smarty;
+require __DIR__ . '/vendor/autoload.php';
+$smarty = new Smarty\Smarty;
 $smarty->assign('php_self', $_SERVER['PHP_SELF']);
+$smarty->muteUndefinedOrNullWarnings();
 
 // Get configuration settings
 require('src/config.php');
@@ -65,7 +65,7 @@ if(isset($_REQUEST['state']) && $_REQUEST['state'] == 'get_data') {
     // Check trusted hosts
     $array = explode(',',$trusted_hosts);
     $remote_addr = ip2long($_SERVER['REMOTE_ADDR']);
-    while((list($key,$value) = each($array)) && $trusted == 0) {
+    foreach($array as $key => $value) {
         $cidr = explode("/", trim($value), 2);
         $addr = ip2long($cidr[0]);
         $len = (count($cidr) == 2) ? intval($cidr[1]) : 32;

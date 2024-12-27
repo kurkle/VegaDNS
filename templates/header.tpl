@@ -73,5 +73,5 @@
 
 
     {* Display messages *}
-    <br>{php}display_msg(){/php}</b><br>
+    <br>{display_msg}</b><br>
     <p>

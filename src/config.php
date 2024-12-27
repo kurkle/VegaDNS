@@ -25,9 +25,9 @@ $private_dirs = '/usr/local/apache/vegadns';
 $session_dir = "$private_dirs/sessions";
 
 // Location of smarty dirs
-$smarty->compile_dir = "$private_dirs/templates_c";
-$smarty->configs_dir = "$private_dirs/configs";
-$smarty->cache_dir = "$private_dirs/cache";
+$smarty->setCompileDir("$private_dirs/templates_c");
+$smarty->setConfigDir("$private_dirs/configs");
+$smarty->setCacheDir("$private_dirs/cache");
 
 
 // Mysql settings
