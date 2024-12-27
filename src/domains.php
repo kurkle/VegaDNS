@@ -153,7 +153,7 @@ if(!isset($_REQUEST['domain_mode']) || $_REQUEST['domain_mode'] == 'delete_cance
 
     $sortbaseurl = "$base_url&mode=domains&page=".( ((isset($_REQUEST['page']) && $_REQUEST['page'] == 'all')) ? "all" : $page);
 
-    while(list($key,$val) = each($sort_array)) {
+    foreach($sort_array as $key => $val) {
         $newsortway = get_sortway($sortfield, $val, $sortway);
         $url = "<a href='$sortbaseurl&sortway=$newsortway&sortfield=$val'>".preg_replace('/_/', ' ', $key)."</a>";
         if($sortfield == $val) $url .= "&nbsp;<img border=0 alt='$sortway' src=images/$sortway.png>";
@@ -331,7 +331,7 @@ if(!isset($_REQUEST['domain_mode']) || $_REQUEST['domain_mode'] == 'delete_cance
     // Add default records
 
     if(isset($records_array) && is_array($records_array)) {
-        while(list($key,$row) = each($records_array)) {
+        foreach($records_array as $key => $row) {
             $host = preg_replace('/DOMAIN/', $domain, $row['host']);
             $val = preg_replace('/DOMAIN/', $domain, $row['val']);
             $params = array(':host' => $host);
@@ -534,7 +534,7 @@ if(!isset($_REQUEST['domain_mode']) || $_REQUEST['domain_mode'] == 'delete_cance
     // Build domains array
     $array_notunique = explode("\n",$_REQUEST['domains']);
     // clean array
-    while(list($key,$domain_untrimmed) = each($array_notunique)) {
+    foreach($array_notunique as $key => $domain_untrimmed) {
         $array_notunique[$key] = trim($domain_untrimmed);
     }
     reset($array_notunique);
@@ -561,7 +561,7 @@ if(!isset($_REQUEST['domain_mode']) || $_REQUEST['domain_mode'] == 'delete_cance
         }
     }
 
-    while(list($key,$domain) = each($array)) {
+    foreach($array as $key => $domain) {
         if(strlen($domain) == 0) continue;
 
         // Make sure each domain is NOT in the database already
@@ -593,7 +593,7 @@ if(!isset($_REQUEST['domain_mode']) || $_REQUEST['domain_mode'] == 'delete_cance
 
 
     // ADD TO SQL
-    while(list($key,$line) = each($domains_array)) {
+    foreach($domains_array as $key => $line) {
         $domain = $line['domain'];
         // add domain first and get the id
         $params = array(':domain' => $domain);
@@ -627,7 +627,7 @@ if(!isset($_REQUEST['domain_mode']) || $_REQUEST['domain_mode'] == 'delete_cance
                 }
             }
         }
-        while(list($line_key,$value) = each($line)) {
+        foreach($line as $line_key => $value) {
             if($line_key != 'domain' && !preg_match('/^#/', $value)) {
                 $result = parse_dataline($value);
                 if(!is_array($result)) continue;

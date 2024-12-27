@@ -67,8 +67,11 @@ if(!isset($_REQUEST['record_mode'])) {
     }
 
     // Get SOA
-    while((list($num,$array) = each($records)) && !isset($soa)) {
-        if($array['type'] == 'S') $soa = $array;
+    foreach($records as $num => $array) {
+        if($array['type'] == 'S') {
+          $soa = $array;
+          break;
+        }
     }
     reset($records);
 
@@ -77,8 +80,11 @@ if(!isset($_REQUEST['record_mode'])) {
         $soa_array = parse_soa($soa);
     } else {
         $tldemail = "hostmaster.$domain";
-        while((list($num,$array) = each($records)) && !isset($tldhost)) {
-            if($array['type'] == 'N') $soa_array['tldhost'] = $array['host'];
+        foreach($records as $num => $array) {
+            if($array['type'] == 'N') {
+              $soa_array['tldhost'] = $array['host'];
+              break; // this might be a bug fix.
+            }
         }
         $soa_array['serial'] = "default";
         $soa_array['refresh'] = 16384;
@@ -88,7 +94,7 @@ if(!isset($_REQUEST['record_mode'])) {
     }
 
     $counter = 0;
-    while(list($key,$array) = each($records)) {
+    foreach($records as $key => $array) {
         $type = get_type($array['type']);
         if($type != 'SOA') {
             $out_array[$counter]['host'] = $array['host'];

@@ -258,7 +258,7 @@ if($_REQUEST['user_mode'] == 'edit_account') {
 
         $sortbaseurl = "$base_url&mode=users&user_mode=show_users";
 
-        while(list($key,$val) = each($sort_array)) {
+        foreach($sort_array as $key => $val) {
             $newsortway = get_sortway($sortfield, $val, $sortway);
             $url = "<a href='$sortbaseurl&sortway=$newsortway&sortfield=$val'>".preg_replace('/_/', ' ', $key)."</a>";
             if($sortfield == $val) $url .= "&nbsp;<img border=0 alt='$sortway' src=images/$sortway.png>";
@@ -363,7 +363,7 @@ if($_REQUEST['user_mode'] == 'edit_account') {
     }
     $q2 = "delete from accounts where cid='".$_REQUEST['cid']."'";
     $pdo->query($q1) or die(print_r($pdo->errorInfo()));
-    $pdo->query($q1) or die(print_r($pdo->errorInfo()));
+    $pdo->query($q2) or die(print_r($pdo->errorInfo()));
 
     set_msg("User deleted successfully");
     header("Location: $base_url&mode=users&user_mode=show_users");

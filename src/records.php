@@ -183,7 +183,7 @@ if(!isset($_REQUEST['record_mode']) || $_REQUEST['record_mode'] == 'delete_cance
 
     $sortbaseurl = "$base_url&mode=records&domain=$domain&page=".( ((isset($_REQUEST['page']) && $_REQUEST['page'] == 'all')) ? "all" : $page);
 
-    while(list($key,$val) = each($sort_array)) {
+    foreach($sort_array as $key => $val) {
         $newsortway = get_sortway($sortfield, $val, $sortway);
         $url = "<a href='$sortbaseurl&sortway=$newsortway&sortfield=$val'>$key</a>";
         if($sortfield == $val) $url .= "&nbsp;<img border=0 alt='$sortway' src=images/$sortway.png>";
@@ -215,8 +215,11 @@ if(!isset($_REQUEST['record_mode']) || $_REQUEST['record_mode'] == 'delete_cance
             $soa_array = parse_soa($soa);
         } else {
             $tldemail = "hostmaster.$domain";
-            while((list($num,$array) = each($records)) && !isset($tldhost)) {
-                if($array['type'] == 'N') $soa_array['tldhost'] = $array['host'];
+            foreach($records as $num => $array) {
+                if($array['type'] == 'N') {
+                  $soa_array['tldhost'] = $array['host'];
+                  break; // bug fix?
+                }
             }
             $soa_array['serial'] = "default";
             $soa_array['refresh'] = 16384;
@@ -252,7 +255,7 @@ if(!isset($_REQUEST['record_mode']) || $_REQUEST['record_mode'] == 'delete_cance
     $smarty->assign('page', $page);
 
     $counter = 0;
-    while(list($key,$array) = each($records)) {
+    foreach($records as $key => $array) {
         $type = get_type($array['type']);
         if($type != 'SOA') {
             $out_array[$counter]['host'] = $array['host'];
